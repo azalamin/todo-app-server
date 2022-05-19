@@ -36,7 +36,6 @@ async function run() {
       const id = req.params.id;
       const { isCompleted } = req.body;
       const query = { _id: ObjectId(id) };
-      console.log(isCompleted);
       const updatedDoc = {
         $set: {
           isCompleted: true,
@@ -45,6 +44,14 @@ async function run() {
       const result = await taskCollection.updateOne(query, updatedDoc);
       res.send(result);
     });
+
+    app.delete("/task/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await taskCollection.deleteOne(query);
+      res.send(result);
+    });
+    
   } finally {
     // await client.close();
   }
